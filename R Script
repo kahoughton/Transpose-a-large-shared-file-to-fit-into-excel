@@ -1,0 +1,17 @@
+# set working directory, load dplyr
+setwd('D:\mothur v.1.37.6')
+library(dplyr)
+
+# input/output file names
+fl_in <- 'Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.an.unique_list.shared'
+fl_out <- paste0(fl_in, '_tp')
+
+# process
+dat <- readLines(fl_in) %>% 
+  strsplit('\t') %>% 
+  do.call('rbind', .) %>% 
+  t %>% 
+  apply(., 1, paste, collapse = '\t')
+
+# save output
+writeLines(dat, con = fl_out)
